@@ -1,0 +1,316 @@
+.header{
+    display: flex;
+    flex-direction: column;
+}
+
+.header > div:first-child{
+    background: var(--color-black);
+}
+
+.infoHeaderContainer{
+    max-width: 1100px;
+    margin: auto;
+    padding: 0.4rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.containerMenuMobile > a{
+    display: flex;
+    align-items: center;
+    gap:0.4rem;
+    text-decoration: none;
+}
+
+.logoDark{
+    display: block;
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
+    color:var(--color-gray-1000);
+    max-width: 71px;
+    font-size: 1.6rem;
+}
+
+.infoHeaderContainer > a{
+    color: var(--color-secondary-200);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.infoHeaderContainer > a:hover{
+    color: var(--color-secondary-300);
+}
+
+.infoList{
+    display: flex;
+    gap: 3rem;
+}
+
+.infoList > li {
+    display: flex;
+    gap:0.4rem;
+}
+
+.infoList > li > svg{
+    color: var(--color-white);
+}
+
+.infoList > li > strong{
+    color: var(--color-white);
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+
+.containerPrimaryNavigation{
+    max-width: 1100px;
+    margin: auto;
+    padding: 0.2rem 3.05rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-primary-100);
+    border-bottom: 5px solid var(--color-primary-300);
+}
+
+.containerPrimaryNavigation > button{
+    padding: 0.4rem 0.6rem;
+    background: var(--color-secondary-500);
+    cursor: pointer;
+    color: var(--color-white);
+    border: none;
+    border-radius: 5px;
+    font-size: 1.25rem;
+}
+
+.containerPrimaryNavigation > button:hover{
+    background: var(--color-secondary-600);
+    transition: background 0.4s;
+}
+
+
+.primaryNavigation{
+    display: flex;
+    align-items: center;
+    gap:7rem;
+}
+
+.navList{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.2rem;
+    list-style: none;
+}
+
+.navList > li > a{
+    color: var(--color-primary-700);
+    font-family: "Raleway", sans-serif;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.navList > li > a{
+    border-bottom: 2px solid transparent;
+    
+}
+
+.navList > li > a:hover{
+    transition: border-bottom 0.3s, color 0.3s;
+    color: var(--color-primary-600);
+    border-bottom: 2px solid var(--color-primary-500);
+}
+
+.userContainer{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.userIconBackground{
+    background: var(--color-gray-700);
+    width: fit-content;
+    padding: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 900px;
+    cursor: pointer;
+}
+
+.userIconBackground:hover >{
+    background: var(--color-gray-700);
+    padding: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 900px;
+}
+
+.userContainer > div{
+    position: absolute;
+    width: 60px;
+    top: 54px;
+    left: 8px;
+    background: var(--color-gray-300);
+    padding: 0.6rem;
+}
+
+.userContainer > div::before{
+    content: '';
+    display: block;
+    position: absolute;
+    top: -8px;
+    left: 4px;
+    width: 20px;
+    height: 15px;
+    background: var(--color-gray-300);
+    clip-path: polygon(0 100%, 100% 100%, 50% 0);
+}
+
+.userContainer > div > button{
+    font-family: "Raleway", sans-serif;
+    font-size: 1.2rem;
+    border: none;
+    color: var(--color-gray-1000);
+    background: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.userContainer > div > button:hover{
+    color: var(--color-primary-700);
+    transition: color 0.3 s;
+}
+
+.menuHamburger{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    width:2.8rem;
+    height: 2.8rem;
+    border-radius: 900px;
+    background-color: var(--color-secondary-600);
+    cursor: pointer;
+}
+
+.menuHamburger:hover {
+    transition: background 0.3s;
+    background: var(--color-secondary-500);
+}
+
+.menuHamburger > span {
+    display: block;
+    background: var(--color-primary-400);
+    width:1.5rem;
+    border-radius: 3px;
+    height: 3px;
+}
+
+@media (max-width: 1000px) {
+    .containerPrimaryNavigation{
+        padding: 0.4rem 2rem;
+    }
+
+    .navList{
+        gap:2rem;
+    }
+
+    .navList > li > a{
+        font-size: 1.3rem;
+    }
+
+    .primaryNavigation{
+        gap:3rem;
+    }
+    
+
+    .containerMenuMobile > a > img{
+        width:50px;
+        height:50px;
+    }
+}
+
+@media (max-width:810px){
+    .menuHamburger{
+        display: flex;
+    }
+
+    .navList[data-active="true"]{
+        display: flex;
+    }
+
+    .userContainer[data-active="true"]{
+        display: flex;
+    }
+
+    .containerPrimaryNavigation > button[data-active="true"]{
+        display: block;
+    }
+
+    .containerPrimaryNavigation > button{
+        display: none;
+    }
+
+    .infoList{
+        display: none;
+    }
+    .containerPrimaryNavigation{
+        flex-direction: column;
+        align-items: start;
+        gap:2.5rem;
+        padding:0;
+    }
+    .primaryNavigation{
+        flex-direction: column;
+        align-items: start;
+        gap:1rem;
+        width: 100%;
+    }
+
+    .navList{
+        display: none;
+        flex-direction: column;
+        gap:1.5rem;
+        margin-left: 2rem;
+    }
+
+    .userContainer{
+        display: none;
+        flex-direction: row;
+        gap:1rem;
+        margin-bottom: 1rem;
+        margin-left: 2rem;
+    }
+
+    .userContainer > div{
+        position: static;
+        height: fit-content;
+    }
+
+    .userContainer > div::before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 4px;
+        left: 47px;
+        width: 15px;
+        height: 20px;
+        background: var(--color-gray-300);
+        clip-path: polygon(0 50%, 100% 0, 100% 100%);
+    }
+
+    .containerMenuMobile{
+        width: 100%;
+        background: var(--color-primary-300);
+        padding: 0.4rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .containerPrimaryNavigation > button{
+        margin: 0 1rem 1rem 2rem;
+    }
+}
