@@ -1,18 +1,9 @@
-import { AuthContext, recoverCustomerAuthData, recoverEmployeeAuthData } from '@/contexts/AuthContext';
-import { CustomerHeader } from '@/components/CustomerHeader';
+import { recoverCustomerAuthData, recoverEmployeeAuthData } from '@/contexts/AuthContext';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import Head from 'next/head';
-import { Footer } from '@/components/Footer';
 
 import styles from '@/styles/pages/Employee.module.css'
-import { TextInput } from '@/components/form/TextInput';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { handleEmployeeRegistrationChange } from '@/formatters/employeeRegistration';
-import { useContext, useState } from 'react';
-import { useRouter } from 'next/router';
 import { EmployeeHeader } from '@/components/EmployeeHeader';
 
 interface EmployeeProps {
