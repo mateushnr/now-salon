@@ -47,10 +47,10 @@ export const EmployeeHeader = ({employeeAccesssLevel} : EmployeeHeaderProps) => 
                         {isManageOptionsOpen 
                         ? (<ul className={styles.navManageList}>
                             <li><Link href='/employee/salon'>Estabelecimento</Link></li> 
-                            <li><Link href='/employee/services'>Serviços</Link></li> 
-                            <li><Link href='/employee/employees'>Funcionários</Link></li> 
-                            <li><Link href='/employee/customers'>Clientes</Link></li> 
-                            <li><Link href='/employee/schedules'>Agendamentos</Link></li> 
+                            <li><Link href='/employee/service'>Serviços</Link></li> 
+                            <li><Link href='/employee/employee'>Funcionários</Link></li> 
+                            <li><Link href='/employee/customer'>Clientes</Link></li> 
+                            <li><Link href='/employee/schedule'>Agendamentos</Link></li> 
                          </ul>)
                         : null
                         }

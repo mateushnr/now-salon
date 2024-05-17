@@ -148,110 +148,111 @@ export default function Salon({employeeAccesssLevel}: SalonProps) {
             <span className={styles.separatorDetail}/>
        
             <form onSubmit={handleSubmit(handleEditSalon)} id="editsalon" className={styles.formContainer}>
-                <section className={styles.sectionSalonData}>
-                    <strong>Dados do Estabelecimento</strong>
-                    
-                    <div className={styles.fieldsSalonData}>
-                        <TextInput
-                            type="text"
-                            field="Nome"
-                            {...register('name')}
-                            error={formState.errors.name}
-                        />
-                        <TextInput
-                            type="tel"
-                            field="Telefone"
-                            maxLength={13}
-                            {...register('phone', {onChange: handlePhoneChange})}
-                            error={formState.errors.phone}
-                        />
-                        <TextInput
-                            type="text"
-                            field="Email Contato"
-                            {...register('emailContact')}
-                            error={formState.errors.emailContact}
-                        /> 
-                        <SelectInput
-                            field="Status do Salão"
-                            options={["Ativo", "Reformando", "Inativo"]}
-                            {...register('status')}
-                            defaultValue={getValues('status')}
-                            error={formState.errors.status}
-                        /> 
-                        <TextInput
-                            type="text"
-                            field="Endereço"
-                            {...register('address')}
-                            error={formState.errors.address}
-                        /> 
-                        <TextInput
-                            type="text"
-                            field="Bairro"
-                            {...register('neighborhood')}
-                            error={formState.errors.neighborhood}
-                        /> 
-                        <TextInput
-                            type="text"
-                            field="Cidade/Estado"
-                            {...register('cityState')}
-                            error={formState.errors.cityState}
-                        /> 
-                    </div>
+                <div className={styles.formData}>
+                    <section className={styles.sectionSalonData}>
+                        <strong>Dados do Estabelecimento</strong>
+                        
+                        <div className={styles.fieldsSalonData}>
+                            <TextInput
+                                type="text"
+                                field="Nome"
+                                {...register('name')}
+                                error={formState.errors.name}
+                            />
+                            <TextInput
+                                type="tel"
+                                field="Telefone"
+                                maxLength={13}
+                                {...register('phone', {onChange: handlePhoneChange})}
+                                error={formState.errors.phone}
+                            />
+                            <TextInput
+                                type="text"
+                                field="Email Contato"
+                                {...register('emailContact')}
+                                error={formState.errors.emailContact}
+                            /> 
+                            <SelectInput
+                                field="Status do Salão"
+                                options={["Ativo", "Reformando", "Inativo"]}
+                                {...register('status')}
+                                defaultValue={getValues('status')}
+                                error={formState.errors.status}
+                            /> 
+                            <TextInput
+                                type="text"
+                                field="Endereço"
+                                {...register('address')}
+                                error={formState.errors.address}
+                            /> 
+                            <TextInput
+                                type="text"
+                                field="Bairro"
+                                {...register('neighborhood')}
+                                error={formState.errors.neighborhood}
+                            /> 
+                            <TextInput
+                                type="text"
+                                field="Cidade/Estado"
+                                {...register('cityState')}
+                                error={formState.errors.cityState}
+                            /> 
+                        </div>
+                    </section>
+                    <section className={styles.sectionSalonOperation}>
+                        <strong>Funcionamento</strong>
+                        
+                        <div className={styles.fieldsSalonOperation}>
+                            <TextInput
+                                type="time"
+                                field="Horário de Abertura"
+                                {...register('timeOpen')}
+                                error={formState.errors.timeOpen}
+                            /> 
+                            <TextInput
+                                type="time"
+                                field="Horário de Fechamento"
+                                {...register('timeClose')}
+                                error={formState.errors.timeClose}
+                            />
 
-                    <button className={styles.saveEditButton} type="submit"> Salvar dados</button>
-                </section>
+                            <div className={styles.containerCheckList}>
+                                <label className={styles.labelTitleChecklist}>Dias de Funcionamento</label>
 
-                <section className={styles.sectionSalonOperation}>
-                    <strong>Funcionamento</strong>
-                    
-                    <div className={styles.fieldsSalonOperation}>
-                        <TextInput
-                            type="time"
-                            field="Horário de Abertura"
-                            {...register('timeOpen')}
-                            error={formState.errors.timeOpen}
-                        /> 
-                        <TextInput
-                            type="time"
-                            field="Horário de Fechamento"
-                            {...register('timeClose')}
-                            error={formState.errors.timeClose}
-                        />
+                                <div>
+                                    <input id="Domingo" onChange={handleCheckboxChange} value="Domingo" type="checkbox" />
+                                    <label htmlFor="Domingo" >Domingo</label>
+                                </div>
+                                <div>
+                                    <input id="Segunda" onChange={handleCheckboxChange} value="Segunda" type="checkbox" />
+                                    <label htmlFor="Segunda">Segunda</label>
+                                </div>
+                                <div>
+                                    <input id="Terca" onChange={handleCheckboxChange} value="Terca" type="checkbox" />
+                                    <label htmlFor="Terca">Terça</label>
+                                </div>
+                                <div>
+                                    <input id="Quarta" onChange={handleCheckboxChange} value="Quarta" type="checkbox" />
+                                    <label htmlFor="Quarta">Quarta</label>
+                                </div>
+                                <div>
+                                    <input id="Quinta" onChange={handleCheckboxChange} value="Quinta" type="checkbox" />
+                                    <label htmlFor="Quinta">Quinta</label>
+                                </div>
+                                <div>
+                                    <input id="Sexta" onChange={handleCheckboxChange} value="Sexta" type="checkbox" />
+                                    <label htmlFor="Sexta">Sexta</label>
+                                </div>
+                                <div>
+                                    <input id="Sabado" onChange={handleCheckboxChange} value="Sabado" type="checkbox" />
+                                    <label htmlFor="Sabado">Sabado</label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
 
-                        <div className={styles.containerCheckList}>
-                            <label className={styles.labelTitleChecklist}>Dias de Funcionamento</label>
-
-                            <div>
-                                <input id="Domingo" onChange={handleCheckboxChange} value="Domingo" type="checkbox" />
-                                <label htmlFor="Domingo" >Domingo</label>
-                            </div>
-                            <div>
-                                <input id="Segunda" onChange={handleCheckboxChange} value="Segunda" type="checkbox" />
-                                <label htmlFor="Segunda">Segunda</label>
-                            </div>
-                            <div>
-                                <input id="Terca" onChange={handleCheckboxChange} value="Terca" type="checkbox" />
-                                <label htmlFor="Terca">Terça</label>
-                            </div>
-                            <div>
-                                <input id="Quarta" onChange={handleCheckboxChange} value="Quarta" type="checkbox" />
-                                <label htmlFor="Quarta">Quarta</label>
-                            </div>
-                            <div>
-                                <input id="Quinta" onChange={handleCheckboxChange} value="Quinta" type="checkbox" />
-                                <label htmlFor="Quinta">Quinta</label>
-                            </div>
-                            <div>
-                                <input id="Sexta" onChange={handleCheckboxChange} value="Sexta" type="checkbox" />
-                                <label htmlFor="Sexta">Sexta</label>
-                            </div>
-                            <div>
-                                <input id="Sabado" onChange={handleCheckboxChange} value="Sabado" type="checkbox" />
-                                <label htmlFor="Sabado">Sabado</label>
-                            </div>
-                        </div> 
-                    </div>
-                </section>
+                <button className={styles.saveEditButton} type="submit"> Salvar dados</button>
             </form>  
         </main>
         </>
