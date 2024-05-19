@@ -1,0 +1,36 @@
+.selectContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.selectContainer > label{
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.5rem;
+    font-weight: normal;
+    color: var(--color-gray-1000);
+}
+
+.selectContainer > select{
+    font-size: 1.1rem;
+    color: var(--color-gray-900);
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--color-black);
+    outline: 1px solid transparent;
+}
+
+.selectContainer > select:focus{
+    border: 1px solid var(--color-primary-400);
+    outline: 1px solid var(--color-primary-400);
+}
+
+.selectContainer > span {
+    color: var(--color-red-400);
+    margin-top: -8px;
+    height:22px;
+}
+
+.placeholderText{
+    color: var(--color-gray-700);
+    font-weight: 300;
+}

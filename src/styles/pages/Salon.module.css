@@ -1,0 +1,134 @@
+.container{
+    display: grid;
+    max-width: 1100px;
+    margin: 4rem auto;
+    padding: 0px 3.05rem;
+}
+
+.pageTitle{
+    font-family: "Raleway", sans-serif;
+    font-size: 2.6rem;
+    font-weight: 300;
+    color: var(--color-gray-1100);
+    margin-bottom: 0.8rem;
+}
+
+.separatorDetail{
+    height:0.4rem;
+    width: 100%;
+    background: var(--color-gray-400);
+    margin-bottom: 1.4rem;
+}
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    gap:2rem;
+}
+
+.formData{
+    display: flex;
+    flex-wrap: wrap;
+    gap:2.4rem;
+}
+
+.sectionSalonData{
+    width: 540px;
+    display: flex;
+    flex-direction: column;
+    gap:1.2rem;
+}
+
+.sectionSalonOperation{
+    width: 340px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap:1.2rem;
+    background: var(--color-white);
+    padding: 1rem;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.127);
+}
+
+.sectionSalonData > strong, .sectionSalonOperation > strong{
+    font-family: "Raleway", "sans-serif";
+    color: var(--color-gray-1000);
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.fieldsSalonData, .fieldsSalonOperation{
+    display: flex;
+    flex-direction: column;
+    gap:0.6rem;
+}
+
+.saveEditButton{
+    background: var(--color-green-400);
+    padding: 0.6rem 1.2rem;
+    border:none;
+    width: fit-content;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.saveEditButton:hover{
+    background: var(--color-green-600);
+    transition: background 0.2s;
+}
+
+.containerCheckList{
+    display: flex;
+    flex-direction: column;
+    gap:0.4rem;
+}
+
+.labelTitleChecklist{
+    display: block;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.5rem;
+    font-weight: normal;
+    color: var(--color-gray-1000);
+    margin-bottom: 0.4rem;
+}
+
+.containerCheckList > div{
+    display: flex;
+    align-items: center;
+    gap:0.6rem;
+}
+
+.containerCheckList > div > input{
+    width:1.2rem;
+    height: 1.2rem;
+    border-radius: 5px;
+}
+
+.containerCheckList > div > label{
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.25rem;
+    font-weight: normal;
+    color: var(--color-gray-900);
+}
+
+@media (max-width: 650px) {
+    .formData{
+        gap:1rem;
+    }
+    
+    .sectionSalonData{
+        width: 340px;
+    }
+}
+
+@media (max-width: 450px) {
+    .formData{
+        gap:1rem;
+    }
+    .sectionSalonData{
+        width: 280px;
+    }
+    .sectionSalonOperation{
+        width: 280px;
+    }
+}

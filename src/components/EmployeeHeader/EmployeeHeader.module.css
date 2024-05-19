@@ -1,0 +1,176 @@
+.header{
+    background: var(--color-secondary-700);
+    border-bottom: 3px solid var(--color-primary-400);
+}
+
+.headerContainer{
+    max-width: 1100px;
+    margin: auto;
+    padding: 0.6rem 3.05rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navPrimary{
+    display: flex;
+    gap:8rem;
+}
+
+.logoLight{
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
+    color:var(--color-white);
+    max-width: 90px;
+    font-size: 1.7rem;
+    text-decoration: none;
+}
+
+.logoLight:hover{
+    transition: color 0.3s;
+    color:var(--color-primary-300);
+}
+
+.navPrimary > ul{
+    display: flex;
+    gap:3rem;
+    list-style: none;
+    align-items: center;
+}
+
+.navPrimary > ul > li > a{
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
+    color:var(--color-gray-100);
+    font-size: 1.4rem;
+    text-decoration: none;
+}
+
+.navPrimary > ul > li > a:hover{
+    transition: color 0.3s;
+    color:var(--color-primary-300);
+}
+
+.navPrimary > ul > li > button{
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
+    color:var(--color-gray-100);
+    font-size: 1.4rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    gap:0.4rem;
+    align-items: center;
+}
+
+.navPrimary > ul > li > button:hover{
+    transition: color 0.3s;
+    color: var(--color-primary-300);
+}
+
+.navPrimary > ul > li > button > svg:hover{
+    transition: color 0.3s;
+    color: var(--color-primary-300);
+}
+
+.btnSair{
+    background: var(--color-secondary-500);
+    color: var(--color-white);
+    padding: 0.5rem 1.1rem;
+    border-radius: 5px;
+    height: fit-content;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 5px rgba(69, 96, 117, 0.165);
+}
+
+.btnSair:hover{
+    transition: background 0.3s, box-shadow-0.3s;
+    background: var(--color-secondary-500);
+    box-shadow: 0px 0px 10px 5px rgba(69, 96, 117, 0.458);
+}
+
+.navManageListContainer {
+    position: relative;
+}
+
+.navManageList {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: calc(100% + 15px);
+    left: 8px;
+    background: var(--color-gray-300);
+    list-style: none;
+}
+
+.navManageList::before{
+    content: '';
+    display: block;
+    position: absolute;
+    top: -8px;
+    left: 4px;
+    width: 15px;
+    height: 8.4px;
+    background: var(--color-gray-300);
+    clip-path: polygon(0 100%, 100% 100%, 50% 0);
+}
+
+.navManageList > li > a{
+    display: block;
+    padding: 0.5rem 0.8rem;
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--color-gray-1000);
+    border-bottom: 2px solid transparent;
+}
+
+.navManageList > li > a:hover{
+    transition: background 0.1s;
+    background: var(--color-gray-200);
+    color: var(--color-secondary-700);
+}
+
+
+@media (max-width:860px){
+    .navPrimary{
+        gap:4rem;
+    }
+}
+
+@media (max-width:660px){
+    .headerContainer{
+        padding: 0.6rem 1.8rem;
+    }
+
+    .navPrimary{
+        gap:1rem;
+    }
+
+    .logoLight{
+        font-size: 1.3rem;
+    }
+
+    .navPrimary > ul {
+        gap:1rem;
+    }
+
+    .navPrimary > ul > li > a{
+        font-size: 1.125rem;
+    }
+
+    .navPrimary > ul > li > button{
+        font-size: 1.125rem;
+        gap:0.1rem;
+        margin-right: 5px;
+    }
+
+    .navPrimary > ul > li > button > svg{
+        width:1.4rem;
+    }
+
+    .btnSair{
+        font-size: 0.9rem;
+    }
+}
