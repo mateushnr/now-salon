@@ -3,43 +3,46 @@ import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import Head from 'next/head';
 
-import styles from '@/styles/pages/Customer.module.css'
+import styles from '@/styles/pages/Schedule.module.css'
 import { EmployeeHeader } from '@/components/EmployeeHeader';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Filter } from '@/components/Filter';
 import { ListTable } from '@/components/ListTable';
 import { useRef, useState } from 'react';
-import { Service } from '@/@types/service';
-import { Customer } from '@/@types/customer';
+import { Schedule } from '@/@types/schedule';
 
-interface ListCustomerProps {
+interface ListScheduleProps {
     employeeAccessLevel: string
-    customersData: Customer[]
+    schedulesData: Schedule[]
 }
 
-export default function ListCustomer({employeeAccessLevel, customersData}: ListCustomerProps) {
+export default function ListSchedule({employeeAccessLevel, schedulesData}: ListScheduleProps) {
     const router = useRouter()
     const actionFormRef = useRef<HTMLFormElement>(null);
 
     const [isItemSelected, setIsItemSelected] = useState(false)
     const [wasItemDeleted, setWasItemDeleted] = useState(false)
-    const [filteredCustomersData, setFilteredCustomersData] = useState<Customer[] | []>(customersData)
+    const [filteredSchedulesData, setFilteredSchedulesData] = useState<Schedule[] | []>(schedulesData)
 
-    const handleFilterCustomerList = (searchedValue: string, searchedOption: string) => {
-        const filteredData = customersData.filter((customer) => {
+    const handleFilterScheduleList = (searchedValue: string, searchedOption: string) => {
+        const filteredData = schedulesData.filter((schedule) => {
             switch (searchedOption) {
-                case 'id': {
-                    return customer.id.toString().toLowerCase().includes(searchedValue.toLowerCase());
+                case 'customer-name': {
+                    return schedule.customerName.toLowerCase().includes(searchedValue.toLowerCase());
                 }
-                case 'name': {
-                    return customer.name.toLowerCase().includes(searchedValue.toLowerCase());
+                case 'employee-name': {
+                    return schedule.employeeName.toLowerCase().includes(searchedValue.toLowerCase());
                 }
-                case 'email': {
-                    return customer.email.toLowerCase().includes(searchedValue.toLowerCase());
+                case 'service-name': {
+                    return schedule.serviceName.toLowerCase().includes(searchedValue.toLowerCase());
                 }
-                case 'phone': {
-                    return customer.phone.toLowerCase().includes(searchedValue.toLowerCase());
+                case 'date-hour-schedule': {
+                    const dateHourSchedule = schedule.dateSchedule + "-" + schedule.hourSchedule
+                    return dateHourSchedule.includes(searchedValue.toLowerCase());
+                }
+                case 'status': {
+                    return schedule.status.toLowerCase().includes(searchedValue.toLowerCase());
                 }
                 default: {
                     return true;
@@ -47,11 +50,11 @@ export default function ListCustomer({employeeAccessLevel, customersData}: ListC
             }
         })
 
-        setFilteredCustomersData(filteredData)
+        setFilteredSchedulesData(filteredData)
     }
 
-    const handleClearFilterCustomerList = () => {
-        setFilteredCustomersData(customersData)
+    const handleClearFilterScheduleList = () => {
+        setFilteredSchedulesData(schedulesData)
     }
 
     const handleSelectionChange = () => {
@@ -66,7 +69,7 @@ export default function ListCustomer({employeeAccessLevel, customersData}: ListC
             const idItemToDelete = formData.get('selectedId');
 
             try {
-                const response = await fetch(`http://localhost:8080/api-now-salon/customers/api/?id=${idItemToDelete}`, {
+                const response = await fetch(`http://localhost:8080/api-now-salon/schedules/api/?id=${idItemToDelete}`, {
                     method: 'DELETE', 
                 });
     
@@ -81,11 +84,11 @@ export default function ListCustomer({employeeAccessLevel, customersData}: ListC
                         break
                     }
                     default: {
-                        alert("Erro ao deletar cliente")
+                        alert("Erro ao deletar agendamento")
                     }
                 }
             } catch (error) {
-            alert("Erro ao deletar cliente: " + error)
+            alert("Erro ao deletar agendamento: " + error)
             }
         }
     };
@@ -97,28 +100,28 @@ export default function ListCustomer({employeeAccessLevel, customersData}: ListC
             const formData = new FormData(formAction);
             const idItemToEdit = formData.get('selectedId');
 
-            router.push(`customer/edit/${idItemToEdit}`)
+            router.push(`schedule/edit/${idItemToEdit}`)
         }
     };
 
-    async function handleSubmitActionCustomer(event: React.FormEvent<HTMLFormElement>){
+    async function handleSubmitActionSchedule(event: React.FormEvent<HTMLFormElement>){
         event.preventDefault()
     }
 
-    const formattedCustomerData = filteredCustomersData.map(customer => {
-        return [customer.id.toString(), customer.id.toString(), customer.name, customer.phone, customer.email]
+    const formattedScheduleData = filteredSchedulesData.map(schedule=>{
+        return [schedule.id.toString(), schedule.dateSchedule + "-" + schedule.hourSchedule, schedule.customerName, schedule.employeeName, schedule.serviceName, schedule.status]
     })
 
     return (
         <>
         <Head>
-            <title>Gerenciar clientes</title>
+            <title>Gerenciar agendamentos</title>
         </Head>
         <EmployeeHeader employeeAccessLevel={employeeAccessLevel}/>
         <main className={styles.container}>
             <header className={styles.header}>
-                <h1 className={styles.pageTitle}>Lista de clientes</h1>
-                <Link href="/employee/customer/register" className={styles.createButton}>Cadastrar novo cliente</Link>
+                <h1 className={styles.pageTitle}>Lista de agendamentos</h1>
+                <Link href="/employee/schedule/selectcustomer" className={styles.createButton}>Cadastrar novo agendamento</Link>
             </header>
             
             <span className={styles.separatorDetail}/>
@@ -126,26 +129,30 @@ export default function ListCustomer({employeeAccessLevel, customersData}: ListC
                 <section>
                     <Filter filterOptions={[
                         {
-                            value: 'id',
-                            label: 'Id'
+                            value: 'customer-name',
+                            label: 'Cliente'
                         }, 
                         {
-                            value: 'name',
-                            label: 'Nome'
+                            value: 'employee-name',
+                            label: 'Funcionário'
                         },
                         {
-                            value: 'phone',
-                            label: 'Telefone'
+                            value: 'service-name',
+                            label: 'Serviço'
                         },
                         {
-                            value: 'email',
-                            label: 'Email'
+                            value: 'date-hour-schedule',
+                            label: 'Data/hora'
                         },
-                    ]} handleFilterList={handleFilterCustomerList} handleClearFilterList={handleClearFilterCustomerList}/>
-                    <form ref={actionFormRef} onSubmit={handleSubmitActionCustomer} className={styles.listForm}>
-                        <ListTable handleSelectionChange={handleSelectionChange}tableHeaders={['Id', 'Nome', 'Telefone', 'Email']} tableData={formattedCustomerData}/>
+                        {
+                            value: 'status',
+                            label: 'Status'
+                        },
+                    ]} handleFilterList={handleFilterScheduleList} handleClearFilterList={handleClearFilterScheduleList}/>
+                    <form ref={actionFormRef} onSubmit={handleSubmitActionSchedule} className={styles.listForm}>
+                        <ListTable handleSelectionChange={handleSelectionChange}tableHeaders={['Data / Hora', 'Cliente', 'Funcionário', 'Serviço', 'Status']} tableData={formattedScheduleData}/>
 
-                        {wasItemDeleted ? (<span className={styles.deletedItemMessage}>Serviço deletado</span>) : null}
+                        {wasItemDeleted ? (<span className={styles.deletedItemMessage}>Agendamento deletado</span>) : null}
                         
 
                         <div className={styles.containerActionButtons}>
@@ -155,7 +162,7 @@ export default function ListCustomer({employeeAccessLevel, customersData}: ListC
                                 disabled={!isItemSelected} 
                                 className={styles.editButton}
                             >
-                                Editar cliente
+                                Editar agendamento
                             </button>
                             <button 
                                 type="submit" 
@@ -163,7 +170,7 @@ export default function ListCustomer({employeeAccessLevel, customersData}: ListC
                                 disabled={!isItemSelected} 
                                 className={styles.deleteButton}
                             >
-                                Excluir cliente
+                                Excluir agendamento
                             </button>
                         </div>
                     </form>
@@ -179,19 +186,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const customer = await recoverCustomerAuthData(tokenCustomer)
     const employee = await recoverEmployeeAuthData(tokenEmployee)
 
-    let customersData = []
+    let schedulesData = []
 
     try {
-        const response = await fetch('http://localhost:8080/api-now-salon/customers/api', {
+        const response = await fetch('http://localhost:8080/api-now-salon/schedules/api', {
         });
     
         if (response.ok) {
-            customersData = await response.json();
+            schedulesData = await response.json();
         }else{
-          throw new Error('Falha em recuperar dados de clientes');
+          throw new Error('Falha em recuperar dados de agendamentos');
         }
     } catch (error) {
-        console.error('Falha em recuperar dados de clientes: ', error);
+        console.error('Falha em recuperar dados de agendamentos: ', error);
     }
     
 
@@ -206,7 +213,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return {
             props: {
                 employeeAccessLevel: employee.accessLevel,
-                customersData,
+                schedulesData,
             }
         }
     }

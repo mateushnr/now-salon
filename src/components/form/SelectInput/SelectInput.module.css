@@ -29,3 +29,8 @@
     margin-top: -8px;
     height:22px;
 }
+
+.placeholderText{
+    color: var(--color-gray-700);
+    font-weight: 300;
+}

@@ -9,12 +9,9 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextInput } from '@/components/form/TextInput';
-import { SelectInput } from '@/components/form/SelectInput';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Textarea } from '@/components/form/Textarea';
 import Link from 'next/link';
-import { Service } from '@/@types/service';
 import { Customer } from '@/@types/customer';
 import { handlePhoneChange } from '@/formatters/phone';
 

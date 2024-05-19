@@ -177,10 +177,24 @@ export default function Salon({employeeAccessLevel}: SalonProps) {
                             /> 
                             <SelectInput
                                 field="Status do Salão"
-                                options={["Ativo", "Reformando", "Inativo"]}
+                                options={[
+                                    {
+                                        value: "Atovp", 
+                                        option: "Atovp"
+                                    }, 
+                                    {   
+                                        value: "Reformando", 
+                                        option: "Reformando"
+                                    },
+                                    {   
+                                        value: "Inativo", 
+                                        option: "Inativo"
+                                    }
+                                ]}
                                 {...register('status')}
                                 defaultValue={getValues('status')}
                                 error={formState.errors.status}
+                                hasPlaceholder={false}
                             /> 
                             <TextInput
                                 type="text"

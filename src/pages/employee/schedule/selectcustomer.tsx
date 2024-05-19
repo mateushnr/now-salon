@@ -3,27 +3,25 @@ import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import Head from 'next/head';
 
-import styles from '@/styles/pages/Customer.module.css'
+import styles from '@/styles/pages/Schedule.module.css'
 import { EmployeeHeader } from '@/components/EmployeeHeader';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Filter } from '@/components/Filter';
 import { ListTable } from '@/components/ListTable';
 import { useRef, useState } from 'react';
-import { Service } from '@/@types/service';
 import { Customer } from '@/@types/customer';
 
-interface ListCustomerProps {
+interface SelectCustomerProps {
     employeeAccessLevel: string
     customersData: Customer[]
 }
 
-export default function ListCustomer({employeeAccessLevel, customersData}: ListCustomerProps) {
+export default function SelectCustomer({employeeAccessLevel, customersData}: SelectCustomerProps) {
     const router = useRouter()
     const actionFormRef = useRef<HTMLFormElement>(null);
 
     const [isItemSelected, setIsItemSelected] = useState(false)
-    const [wasItemDeleted, setWasItemDeleted] = useState(false)
     const [filteredCustomersData, setFilteredCustomersData] = useState<Customer[] | []>(customersData)
 
     const handleFilterCustomerList = (searchedValue: string, searchedOption: string) => {
@@ -58,46 +56,14 @@ export default function ListCustomer({employeeAccessLevel, customersData}: ListC
         setIsItemSelected(true);
     };
 
-    const handleDeleteClick = async () => {
+    const handleSelectCustomerClick = () => {
         const formAction = actionFormRef.current
 
         if(formAction !== null){
             const formData = new FormData(formAction);
-            const idItemToDelete = formData.get('selectedId');
+            const idCustomerToCreateSchedule = formData.get('selectedId');
 
-            try {
-                const response = await fetch(`http://localhost:8080/api-now-salon/customers/api/?id=${idItemToDelete}`, {
-                    method: 'DELETE', 
-                });
-    
-                switch (response.status){
-                    case 200:{
-                        setWasItemDeleted(true)
-
-                        setTimeout(()=>{
-                            router.reload()
-                        }, 800)
-
-                        break
-                    }
-                    default: {
-                        alert("Erro ao deletar cliente")
-                    }
-                }
-            } catch (error) {
-            alert("Erro ao deletar cliente: " + error)
-            }
-        }
-    };
-
-    const handleEditClick = () => {
-        const formAction = actionFormRef.current
-
-        if(formAction !== null){
-            const formData = new FormData(formAction);
-            const idItemToEdit = formData.get('selectedId');
-
-            router.push(`customer/edit/${idItemToEdit}`)
+            router.push(`/employee/schedule/register/${idCustomerToCreateSchedule}`)
         }
     };
 
@@ -112,13 +78,13 @@ export default function ListCustomer({employeeAccessLevel, customersData}: ListC
     return (
         <>
         <Head>
-            <title>Gerenciar clientes</title>
+            <title>Selecionar cliente</title>
         </Head>
         <EmployeeHeader employeeAccessLevel={employeeAccessLevel}/>
         <main className={styles.container}>
             <header className={styles.header}>
-                <h1 className={styles.pageTitle}>Lista de clientes</h1>
-                <Link href="/employee/customer/register" className={styles.createButton}>Cadastrar novo cliente</Link>
+                <h1 className={styles.pageTitle}>Selecione um cliente</h1>
+                <Link href="/employee/schedule" className={styles.listButton}>Visualizar agendamentos</Link>
             </header>
             
             <span className={styles.separatorDetail}/>
@@ -143,29 +109,15 @@ export default function ListCustomer({employeeAccessLevel, customersData}: ListC
                         },
                     ]} handleFilterList={handleFilterCustomerList} handleClearFilterList={handleClearFilterCustomerList}/>
                     <form ref={actionFormRef} onSubmit={handleSubmitActionCustomer} className={styles.listForm}>
-                        <ListTable handleSelectionChange={handleSelectionChange}tableHeaders={['Id', 'Nome', 'Telefone', 'Email']} tableData={formattedCustomerData}/>
-
-                        {wasItemDeleted ? (<span className={styles.deletedItemMessage}>Serviço deletado</span>) : null}
-                        
-
-                        <div className={styles.containerActionButtons}>
+                        <ListTable handleSelectionChange={handleSelectionChange}tableHeaders={['Id', 'Nome', 'Telefone', 'Email']} tableData={formattedCustomerData}/>        
                             <button 
                                 type="submit" 
-                                onClick={handleEditClick}
+                                onClick={handleSelectCustomerClick}
                                 disabled={!isItemSelected} 
-                                className={styles.editButton}
+                                className={styles.selectButton}
                             >
-                                Editar cliente
+                                Selecionar cliente
                             </button>
-                            <button 
-                                type="submit" 
-                                onClick={handleDeleteClick}
-                                disabled={!isItemSelected} 
-                                className={styles.deleteButton}
-                            >
-                                Excluir cliente
-                            </button>
-                        </div>
                     </form>
                 </section>
         </main>

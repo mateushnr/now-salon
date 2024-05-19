@@ -157,9 +157,19 @@ export default function CreateEmployee({employeeAccessLevel, servicesData}: Empl
                             />
                             <SelectInput
                                 field="Status do serviço"
-                                options={["Funcionario", "Admin"]}
+                                options={[
+                                    {
+                                        value: "Funcionario", 
+                                        option: "Funcionario"
+                                    }, 
+                                    {   
+                                        value: "Admin", 
+                                        option: "Admin"
+                                    }
+                                ]}
                                 {...register('accessLevel')}
                                 error={formState.errors.accessLevel}
+                                hasPlaceholder={false}
                             /> 
                             <TextInput
                                 type="password"

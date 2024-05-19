@@ -121,10 +121,20 @@ export default function CreateService({employeeAccessLevel}: ServiceProps) {
                         /> 
                         <SelectInput
                             field="Status do serviço"
-                            options={["Ativo", "Desativado"]}
+                            options={[
+                                {
+                                    value: "Ativo", 
+                                    option: "Ativo"
+                                }, 
+                                {   
+                                    value: "Desativado", 
+                                    option: "Desativado"
+                                }
+                            ]}
                             {...register('status')}
                             defaultValue={getValues('status')}
                             error={formState.errors.status}
+                            hasPlaceholder={false}
                         /> 
                     </div>
 
