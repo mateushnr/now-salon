@@ -50,7 +50,6 @@ export default function ListService({employeeAccessLevel, servicesData}: ListSer
     }
 
     const handleClearFilterServiceList = () => {
-        console.log("chegou")
         setFilteredServicesData(servicesData)
     }
 
@@ -123,7 +122,7 @@ export default function ListService({employeeAccessLevel, servicesData}: ListSer
             
             <span className={styles.separatorDetail}/>
 
-                <section className={styles.sectionSalonData}>
+                <section>
                     <Filter filterOptions={[
                         {
                             value: 'name',

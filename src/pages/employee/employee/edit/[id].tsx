@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextInput } from '@/components/form/TextInput';
 import { SelectInput } from '@/components/form/SelectInput';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { handlePhoneChange } from '@/formatters/phone';
