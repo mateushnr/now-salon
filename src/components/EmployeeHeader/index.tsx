@@ -9,10 +9,10 @@ import { ModalLogin } from '../modal/ModalLogin'
 import { AuthContext } from '@/contexts/AuthContext'
 
 type EmployeeHeaderProps = {
-    employeeAccesssLevel: string
+    employeeAccessLevel: string
 }
 
-export const EmployeeHeader = ({employeeAccesssLevel} : EmployeeHeaderProps) => {
+export const EmployeeHeader = ({employeeAccessLevel} : EmployeeHeaderProps) => {
     const [isManageOptionsOpen, setIsManageOptionsOpen] = useState(false);
 
     const manageOptionsRef = useRef<HTMLLIElement>(null);
@@ -39,7 +39,7 @@ export const EmployeeHeader = ({employeeAccesssLevel} : EmployeeHeaderProps) => 
                     <li>
                         <Link href={'/employee/myservices'}>Meus serviços</Link>
                     </li>
-                    {employeeAccesssLevel == 'Admin'
+                    {employeeAccessLevel == 'Admin'
                     ?(
                         <li ref={manageOptionsRef} className={styles.navManageListContainer}>
                         <button onClick={() => setIsManageOptionsOpen(!isManageOptionsOpen)}>Gerenciar <ChevronDown/></button>

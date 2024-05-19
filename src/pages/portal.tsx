@@ -74,12 +74,14 @@ export default function Portal({isCustomerAuthenticated}: PortalProps) {
                         {...register('registration', {onChange: handleEmployeeRegistrationChange})} 
                         error={formState.errors.registration}
                         maxLength={4}
+                        hasInfo={false}
                     />
                     <TextInput 
                         type='password' 
                         field="Senha" 
                         {...register('password')} 
                         error={formState.errors.password}
+                        hasInfo={false}
                     />
                 </div>
                 <button className={styles.btnLoginEmployee} type='submit'>Acessar sistema</button>

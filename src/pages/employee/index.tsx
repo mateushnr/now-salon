@@ -7,18 +7,18 @@ import styles from '@/styles/pages/Employee.module.css'
 import { EmployeeHeader } from '@/components/EmployeeHeader';
 
 interface EmployeeProps {
-  employeeAccesssLevel: string
+  employeeAccessLevel: string
   employeeName: string
 }
 
-export default function Employee({employeeAccesssLevel, employeeName}: EmployeeProps) {
+export default function Employee({employeeAccessLevel, employeeName}: EmployeeProps) {
 
     return (
         <>
         <Head>
             <title>Portal funcionários</title>
         </Head>
-        <EmployeeHeader employeeAccesssLevel={employeeAccesssLevel}/>
+        <EmployeeHeader employeeAccessLevel={employeeAccessLevel}/>
         <main className={styles.container}>
            <h1 className={styles.welcomeEmployeeTitle}>Bem vindo <strong>{employeeName}</strong></h1>
            <span className={styles.separatorDetail}/>
@@ -44,7 +44,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }else {
         return {
             props: {
-                employeeAccesssLevel: employee.accessLevel,
+                employeeAccessLevel: employee.accessLevel,
                 employeeName: employee.name
             }
         }

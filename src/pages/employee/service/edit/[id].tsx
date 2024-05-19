@@ -86,7 +86,7 @@ export default function EditService({employeeAccessLevel, serviceDataToEdit}: Se
         <Head>
             <title>Editar serviço</title>
         </Head>
-        <EmployeeHeader employeeAccesssLevel={employeeAccessLevel}/>
+        <EmployeeHeader employeeAccessLevel={employeeAccessLevel}/>
         <main className={styles.container}>
             <header className={styles.headerService}>
                 <h1 className={styles.pageTitle}>Editando serviço</h1>
@@ -106,6 +106,7 @@ export default function EditService({employeeAccessLevel, serviceDataToEdit}: Se
                             field="Nome"
                             {...register('name')}
                             error={formState.errors.name}
+                            hasInfo={false}
                         />
                         <Textarea
                             field="Descrição"
@@ -117,6 +118,7 @@ export default function EditService({employeeAccessLevel, serviceDataToEdit}: Se
                             field="Tempo estimado"
                             {...register('estimatedTime')}
                             error={formState.errors.estimatedTime}
+                            hasInfo={false}
                         /> 
                         <TextInput
                             type="number"
@@ -124,6 +126,7 @@ export default function EditService({employeeAccessLevel, serviceDataToEdit}: Se
                             {...register('price')}
                             step="0.1"
                             error={formState.errors.price}
+                            hasInfo={false}
                         /> 
                         <SelectInput
                             field="Status do serviço"
@@ -179,7 +182,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }else {
         return {
             props: {
-                employeeAccesssLevel: employee.accessLevel,
+                employeeAccessLevel: employee.accessLevel,
                 serviceDataToEdit,
             }
         }

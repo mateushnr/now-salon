@@ -53,10 +53,10 @@ const EditSalonSchema = z.object({
 export type EditSalonFormData = z.infer<typeof EditSalonSchema>
 
 interface SalonProps {
-    employeeAccesssLevel: string
+    employeeAccessLevel: string
 }
 
-export default function Salon({employeeAccesssLevel}: SalonProps) {
+export default function Salon({employeeAccessLevel}: SalonProps) {
     const { register, handleSubmit, formState, setValue, getValues } =
     useForm<EditSalonFormData>({
       mode: 'onBlur',
@@ -142,7 +142,7 @@ export default function Salon({employeeAccesssLevel}: SalonProps) {
         <Head>
             <title>Gerenciar estabelecimento</title>
         </Head>
-        <EmployeeHeader employeeAccesssLevel={employeeAccesssLevel}/>
+        <EmployeeHeader employeeAccessLevel={employeeAccessLevel}/>
         <main className={styles.container}>
             <h1 className={styles.pageTitle}>Gerenciar Estabelecimento</h1>
             <span className={styles.separatorDetail}/>
@@ -158,6 +158,7 @@ export default function Salon({employeeAccesssLevel}: SalonProps) {
                                 field="Nome"
                                 {...register('name')}
                                 error={formState.errors.name}
+                                hasInfo={false}
                             />
                             <TextInput
                                 type="tel"
@@ -165,12 +166,14 @@ export default function Salon({employeeAccesssLevel}: SalonProps) {
                                 maxLength={13}
                                 {...register('phone', {onChange: handlePhoneChange})}
                                 error={formState.errors.phone}
+                                hasInfo={false}
                             />
                             <TextInput
                                 type="text"
                                 field="Email Contato"
                                 {...register('emailContact')}
                                 error={formState.errors.emailContact}
+                                hasInfo={false}
                             /> 
                             <SelectInput
                                 field="Status do Salão"
@@ -184,18 +187,21 @@ export default function Salon({employeeAccesssLevel}: SalonProps) {
                                 field="Endereço"
                                 {...register('address')}
                                 error={formState.errors.address}
+                                hasInfo={false}
                             /> 
                             <TextInput
                                 type="text"
                                 field="Bairro"
                                 {...register('neighborhood')}
                                 error={formState.errors.neighborhood}
+                                hasInfo={false}
                             /> 
                             <TextInput
                                 type="text"
                                 field="Cidade/Estado"
                                 {...register('cityState')}
                                 error={formState.errors.cityState}
+                                hasInfo={false}
                             /> 
                         </div>
                     </section>
@@ -208,12 +214,14 @@ export default function Salon({employeeAccesssLevel}: SalonProps) {
                                 field="Horário de Abertura"
                                 {...register('timeOpen')}
                                 error={formState.errors.timeOpen}
+                                hasInfo={false}
                             /> 
                             <TextInput
                                 type="time"
                                 field="Horário de Fechamento"
                                 {...register('timeClose')}
                                 error={formState.errors.timeClose}
+                                hasInfo={false}
                             />
 
                             <div className={styles.containerCheckList}>
@@ -275,7 +283,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }else {
         return {
             props: {
-                employeeAccesssLevel: employee.accessLevel,
+                employeeAccessLevel: employee.accessLevel,
             }
         }
     }

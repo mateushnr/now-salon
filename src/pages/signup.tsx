@@ -18,20 +18,23 @@ import { CustomerHeader } from '@/components/CustomerHeader'
 
 const SignUpSchema = z.object({
     name: z
-      .string()
-      .min(1, 'Informe o seu nome'),
+        .string()
+        .min(1, 'Informe o seu nome'),
     email: z
-      .string()
-      .min(1, 'Informe um email')
-      .refine((value) => {
+        .string()
+        .min(1, 'Informe um email')
+        .refine((value) => {
         const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
         return regex.test(value)
-      }, 'Email inválido'),
+        }, 'Email inválido'),
     phone: z
         .string()
         .min(1, 'Informe o seu telefone')
         .min(13, 'Telefone incompleto'),
-    password: z.string().min(1, 'Informe a sua senha').min(6, 'A senha deve ter no mínimo 6 caracteres')
+    password: z
+        .string()
+        .min(1, 'Informe a sua senha')
+        .min(6, 'A senha deve ter no mínimo 6 caracteres')
   })
 
 export type SignUpFormData = z.infer<typeof SignUpSchema>
@@ -121,25 +124,29 @@ export default function SignUp({isCustomerAuthenticated}: SignUpProps) {
                         field="Nome"
                         {...register('name')}
                         error={formState.errors.name}
+                        hasInfo={false}
                     />
                     <TextInput
                         type="text"
                         field="Email"
                         {...register('email')}
                         error={formState.errors.email}
+                        hasInfo={false}
                     /> 
-                <TextInput
+                    <TextInput
                         type="tel"
                         field="Telefone"
                         maxLength={13}
                         {...register('phone', {onChange: handlePhoneChange})}
                         error={formState.errors.phone}
+                        hasInfo={false}
                     />
-                <TextInput
+                    <TextInput
                         type="password"
                         field="Senha"
                         {...register('password')}
                         error={formState.errors.password}
+                        hasInfo={false}
                     />
                 </div>
                 

@@ -9,21 +9,21 @@ interface filterOption{
 
 interface FilterProps {
     filterOptions: filterOption[]
-    handleFilterServiceList: (searchedValue:string, searchedOption: string) => void
-    handleClearFilterServiceList: () => void
+    handleFilterList: (searchedValue:string, searchedOption: string) => void
+    handleClearFilterList: () => void
 }
 
-export const Filter = ({filterOptions, handleFilterServiceList, handleClearFilterServiceList}: FilterProps) => {
+export const Filter = ({filterOptions, handleFilterList, handleClearFilterList}: FilterProps) => {
     const [searchValue, setSearchValue] = useState('')
 
     const filterFormRef = useRef<HTMLFormElement>(null)
 
-    const handleClearFilter = () =>{
-        handleClearFilterServiceList()
+    const handleClickClearFilter = () =>{
+        handleClearFilterList()
         setSearchValue('')
     }
 
-    const handleFilterList = () => {
+    const handleClickFilterList = () => {
         const formFilter = filterFormRef.current
 
         if(formFilter !== null){
@@ -33,7 +33,7 @@ export const Filter = ({filterOptions, handleFilterServiceList, handleClearFilte
             const searchedOption = filterFormData.get('filterOption')?.toString();
 
             if(searchedValue && searchedOption){
-                handleFilterServiceList(searchedValue, searchedOption)
+                handleFilterList(searchedValue, searchedOption)
             }
         }
     }
@@ -63,10 +63,10 @@ export const Filter = ({filterOptions, handleFilterServiceList, handleClearFilte
             <section className={styles.sectionFilterInput}>
                 <input type="text" value={searchValue} onChange={event => setSearchValue(event.target.value)} className={styles.searchInput} name="filterValue"/>
 
-                <button onClick={handleFilterList} disabled={!searchValue} className={styles.filterButton}>
+                <button onClick={handleClickFilterList} disabled={!searchValue} className={styles.filterButton}>
                     <Search/> Pesquisar
                 </button>
-                <button onClick={handleClearFilter} className={styles.searchAllButton}>
+                <button onClick={handleClickClearFilter} className={styles.searchAllButton}>
                     Limpar filtro
                 </button>
             </section>

@@ -33,10 +33,10 @@ const ServiceSchema = z.object({
 export type ServiceFormData = z.infer<typeof ServiceSchema>
 
 interface ServiceProps {
-    employeeAccesssLevel: string
+    employeeAccessLevel: string
 }
 
-export default function CreateService({employeeAccesssLevel}: ServiceProps) {
+export default function CreateService({employeeAccessLevel}: ServiceProps) {
     const { register, handleSubmit, formState, setValue, getValues } =
     useForm<ServiceFormData>({
       mode: 'onBlur',
@@ -78,7 +78,7 @@ export default function CreateService({employeeAccesssLevel}: ServiceProps) {
         <Head>
             <title>Gerenciar serviços</title>
         </Head>
-        <EmployeeHeader employeeAccesssLevel={employeeAccesssLevel}/>
+        <EmployeeHeader employeeAccessLevel={employeeAccessLevel}/>
         <main className={styles.container}>
             <header className={styles.headerService}>
                 <h1 className={styles.pageTitle}>Criar novo serviço</h1>
@@ -97,6 +97,7 @@ export default function CreateService({employeeAccesssLevel}: ServiceProps) {
                             field="Nome"
                             {...register('name')}
                             error={formState.errors.name}
+                            hasInfo={false}
                         />
                         <Textarea
                             field="Descrição"
@@ -108,6 +109,7 @@ export default function CreateService({employeeAccesssLevel}: ServiceProps) {
                             field="Tempo estimado"
                             {...register('estimatedTime')}
                             error={formState.errors.estimatedTime}
+                            hasInfo={false}
                         /> 
                         <TextInput
                             type="number"
@@ -115,6 +117,7 @@ export default function CreateService({employeeAccesssLevel}: ServiceProps) {
                             {...register('price')}
                             step="0.1"
                             error={formState.errors.price}
+                            hasInfo={false}
                         /> 
                         <SelectInput
                             field="Status do serviço"
@@ -151,7 +154,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }else {
         return {
             props: {
-                employeeAccesssLevel: employee.accessLevel,
+                employeeAccessLevel: employee.accessLevel,
             }
         }
     }

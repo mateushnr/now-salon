@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import Head from 'next/head';
 
-import styles from '@/styles/pages/Service.module.css'
+import styles from '@/styles/pages/ManageEmploye.module.css'
 import { EmployeeHeader } from '@/components/EmployeeHeader';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -11,34 +11,38 @@ import { Filter } from '@/components/Filter';
 import { ListTable } from '@/components/ListTable';
 import { useRef, useState } from 'react';
 import { Service } from '@/@types/service';
+import { Employee } from '@/@types/employee';
 
-interface ListServiceProps {
+interface ListEmployeeProps {
     employeeAccessLevel: string
-    servicesData: Service[]
+    employeesData: Employee[]
 }
 
-export default function ListService({employeeAccessLevel, servicesData}: ListServiceProps) {
+export default function ListEmployee({employeeAccessLevel, employeesData}: ListEmployeeProps) {
     const router = useRouter()
     const actionFormRef = useRef<HTMLFormElement>(null);
 
     const [isItemSelected, setIsItemSelected] = useState(false)
     const [wasItemDeleted, setWasItemDeleted] = useState(false)
-    const [filteredServicesData, setFilteredServicesData] = useState<Service[] | []>(servicesData)
+    const [filteredEmployeesData, setFilteredEmployeesData] = useState<Employee[] | []>(employeesData)
 
-    const handleFilterServiceList = (searchedValue: string, searchedOption: string) => {
-        const filteredData = servicesData.filter((service) => {
+    const handleFilterEmployeeList = (searchedValue: string, searchedOption: string) => {
+        const filteredData = employeesData.filter((employee) => {
             switch (searchedOption) {
+                case 'registration': {
+                    return employee.registration.toString().toLowerCase().includes(searchedValue.toLowerCase());
+                }
                 case 'name': {
-                    return service.name.toLowerCase().includes(searchedValue.toLowerCase());
+                    return employee.name.toLowerCase().includes(searchedValue.toLowerCase());
                 }
-                case 'duration': {
-                    return service.estimatedTime.includes(searchedValue);
+                case 'phone': {
+                    return employee.phone.toLowerCase().includes(searchedValue.toLowerCase());
                 }
-                case 'price': {
-                    return service.price <= Number(searchedValue);
+                case 'role': {
+                    return employee.role.toLowerCase().includes(searchedValue.toLowerCase());
                 }
-                case 'status': {
-                    return service.status.toLowerCase().includes(searchedValue.toLowerCase());
+                case 'accessLevel': {
+                    return employee.accessLevel.toLowerCase().includes(searchedValue.toLowerCase());
                 }
                 default: {
                     return true;
@@ -46,12 +50,12 @@ export default function ListService({employeeAccessLevel, servicesData}: ListSer
             }
         })
 
-        setFilteredServicesData(filteredData)
+        setFilteredEmployeesData(filteredData)
     }
 
-    const handleClearFilterServiceList = () => {
+    const handleClearFilterEmployeeList = () => {
         console.log("chegou")
-        setFilteredServicesData(servicesData)
+        setFilteredEmployeesData(employeesData)
     }
 
     const handleSelectionChange = () => {
@@ -66,7 +70,7 @@ export default function ListService({employeeAccessLevel, servicesData}: ListSer
             const idItemToDelete = formData.get('selectedId');
 
             try {
-                const response = await fetch(`http://localhost:8080/api-now-salon/services/api/?id=${idItemToDelete}`, {
+                const response = await fetch(`http://localhost:8080/api-now-salon/employees/api/?id=${idItemToDelete}`, {
                     method: 'DELETE', 
                 });
     
@@ -81,11 +85,11 @@ export default function ListService({employeeAccessLevel, servicesData}: ListSer
                         break
                     }
                     default: {
-                        alert("Erro ao deletar serviço")
+                        alert("Erro ao deletar funcionário")
                     }
                 }
             } catch (error) {
-            alert("Erro ao deletar serviço: " + error)
+            alert("Erro ao deletar funcionário: " + error)
             }
         }
     };
@@ -97,28 +101,28 @@ export default function ListService({employeeAccessLevel, servicesData}: ListSer
             const formData = new FormData(formAction);
             const idItemToEdit = formData.get('selectedId');
 
-            router.push(`service/edit/${idItemToEdit}`)
+            router.push(`employee/edit/${idItemToEdit}`)
         }
     };
 
-    async function handleSubmitActionService(event: React.FormEvent<HTMLFormElement>){
+    async function handleSubmitActionEmployee(event: React.FormEvent<HTMLFormElement>){
         event.preventDefault()
     }
 
-    const formattedServiceData = filteredServicesData.map(service=>{
-        return [service.id.toString(), service.name, service.estimatedTime, service.price.toString(), service.status]
+    const formattedEmployeeData = filteredEmployeesData.map(service=>{
+        return [service.registration.toString(), service.registration.toString(), service.name, service.phone, service.role, service.accessLevel]
     })
 
     return (
         <>
         <Head>
-            <title>Gerenciar serviços</title>
+            <title>Gerenciar funcionários</title>
         </Head>
         <EmployeeHeader employeeAccessLevel={employeeAccessLevel}/>
         <main className={styles.container}>
-            <header className={styles.headerService}>
-                <h1 className={styles.pageTitle}>Lista de serviços</h1>
-                <Link href="/employee/service/register" className={styles.createServiceButton}>Cadastrar novo serviço</Link>
+            <header className={styles.header}>
+                <h1 className={styles.pageTitle}>Lista de funcionários</h1>
+                <Link href="/employee/employee/register" className={styles.createButton}>Cadastrar novo funcionário</Link>
             </header>
             
             <span className={styles.separatorDetail}/>
@@ -126,26 +130,30 @@ export default function ListService({employeeAccessLevel, servicesData}: ListSer
                 <section className={styles.sectionSalonData}>
                     <Filter filterOptions={[
                         {
-                            value: 'name',
-                            label: 'Nome'
+                            value: 'registration',
+                            label: 'Matrícula'
                         }, 
                         {
-                            value: 'duration',
-                            label: 'Duração'
+                            value: 'name',
+                            label: 'Nome'
                         },
                         {
-                            value: 'price',
-                            label: 'Preço'
+                            value: 'phone',
+                            label: 'Telefone'
                         },
                         {
-                            value: 'status',
-                            label: 'Status'
+                            value: 'role',
+                            label: 'Cargo'
                         },
-                    ]} handleFilterList={handleFilterServiceList} handleClearFilterList={handleClearFilterServiceList}/>
-                    <form ref={actionFormRef} onSubmit={handleSubmitActionService} className={styles.listForm}>
-                        <ListTable handleSelectionChange={handleSelectionChange}tableHeaders={['Nome', 'Tempo estimado', 'Preço', 'Status']} tableData={formattedServiceData}/>
+                        {
+                            value: 'accessLevel',
+                            label: 'Nível de acesso'
+                        },
+                    ]} handleFilterList={handleFilterEmployeeList} handleClearFilterList={handleClearFilterEmployeeList}/>
+                    <form ref={actionFormRef} onSubmit={handleSubmitActionEmployee} className={styles.listForm}>
+                        <ListTable handleSelectionChange={handleSelectionChange}tableHeaders={['Registro', 'Nome', 'Telefone', 'Cargo', 'Acesso']} tableData={formattedEmployeeData}/>
 
-                        {wasItemDeleted ? (<span className={styles.deletedItemMessage}>Serviço deletado</span>) : null}
+                        {wasItemDeleted ? (<span className={styles.deletedItemMessage}>Funcionário deletado</span>) : null}
                         
 
                         <div className={styles.containerActionButtons}>
@@ -155,7 +163,7 @@ export default function ListService({employeeAccessLevel, servicesData}: ListSer
                                 disabled={!isItemSelected} 
                                 className={styles.editButton}
                             >
-                                Editar serviço
+                                Editar funcionário
                             </button>
                             <button 
                                 type="submit" 
@@ -163,7 +171,7 @@ export default function ListService({employeeAccessLevel, servicesData}: ListSer
                                 disabled={!isItemSelected} 
                                 className={styles.deleteButton}
                             >
-                                Excluir serviço
+                                Excluir funcionário
                             </button>
                         </div>
                     </form>
@@ -179,14 +187,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const customer = await recoverCustomerAuthData(tokenCustomer)
     const employee = await recoverEmployeeAuthData(tokenEmployee)
 
-    let servicesData = []
+    let employeesData = []
 
     try {
-        const response = await fetch('http://localhost:8080/api-now-salon/services/api', {
+        const response = await fetch('http://localhost:8080/api-now-salon/employees/api', {
         });
     
         if (response.ok) {
-            servicesData = await response.json();
+           employeesData = await response.json();
         }else{
           throw new Error('Falha em recuperar dados de serviços');
         }
@@ -206,7 +214,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return {
             props: {
                 employeeAccessLevel: employee.accessLevel,
-                servicesData,
+                employeesData,
             }
         }
     }
